@@ -16,21 +16,25 @@ docker pull jpdurot/opentsdb
 docker run -d -p 4242:4242 jpdurot/opentsdb:latest
 ```
 
-Now load up a bash shell within the container so we can make some metrics.
-
-```
-docker exec -t -i sharp_golick /bin/bash
-/usr/share/opentsdb/bin/tsdb mkmetric eos.status
-```
-
-Finally, find the name of the container and resolve the IP address of the OpenTSDB container:
+Find out the name of the container:
 
 ```
 [root@server tmp]# docker ps
 CONTAINER ID        IMAGE                                  COMMAND                  CREATED             STATUS                  PORTS                                                           NAMES
 bcec9674d430        jpdurot/opentsdb:latest                "/run.sh"                5 hours ago         Up 5 hours                                                                              sharp_golick
                                                             sharp_golick
+```
 
+Now load up a bash shell within the container so we can make some metrics. eos.status is used in the sample.json file. 
+
+```
+docker exec -t -i sharp_golick /bin/bash
+/usr/share/opentsdb/bin/tsdb mkmetric eos.status
+```
+
+Finally, resolve the IP address of the OpenTSDB container:
+
+```
 docker inspect --format '{{.NetworkSettings.IPAddress}}' sharp_golick
 ```
 
@@ -85,13 +89,3 @@ So in the above example, the metric will be eos.status
  # To Do
  
   - Get a better sample.json file to show interface status
-
-
-
-
-
-
-
-
-
-
