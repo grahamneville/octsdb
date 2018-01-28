@@ -1,0 +1,12 @@
+{
+        "comment": "This is a sample configuration",
+        "subscriptions": [
+                "/Sysdb/cli/status"
+        ],
+        "metricPrefix": "eos",
+        "metrics": {
+                "test": {
+                        "path": "Sysdb/cli/(status)/startupConfigLastWriteTime"
+                }
+        }
+}
