@@ -1,12 +1,12 @@
 {
         "comment": "This is a sample configuration",
         "subscriptions": [
-                "/Sysdb/cli/status"
+                "/Smash/counters/ethIntf/PhyEthtool-1/current/"
         ],
         "metricPrefix": "eos",
         "metrics": {
                 "test": {
-                        "path": "Sysdb/cli/(status)/startupConfigLastWriteTime"
+                        "path": "/Smash/(counters)/ethIntf/PhyEthtool-1/current/counter/(?P<intf>.+)/(rates)/(?P<direction>(?:in|out))(BitsRate|PktsRate)"
                 }
         }
 }
