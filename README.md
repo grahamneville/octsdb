@@ -60,8 +60,16 @@ Now run the octsdb binary filling in the Arista switch ip and OpenTSDB container
 ./octsdb -addrs <arista_switch_ip>:6042 -config sample.json -v 4 -tsdb <opentsdb_container_ip>:4242
 ```
 
+Now browse to the OpenTSDB container IP in a web browser on port 4242. e.g. http://192.168.1.100:4242
+Then in the metric field type "eos.counters.rates.bitsrate", click on rate and set a tag of "direction" and "in".
+Finally set start time being 10 mins ago, and to time as now. 
+You should then see graph points coming through, if you click "now" or "autoreload" the graph will be populated with extra points as they come through.
 
-# sample.json file
+![jpg](tsdbexample.JPG)
+
+
+
+# sample.json file usage
 
 ```
 {
