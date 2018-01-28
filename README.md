@@ -56,6 +56,40 @@ Now run the octsdb binary filling in the Arista switch ip and OpenTSDB container
 ```
 
 
+# sample.json file
+
+```
+{
+        "comment": "This is a sample configuration",
+        "subscriptions": [
+                "/Sysdb/cli/status"
+        ],
+        "metricPrefix": "eos",
+        "metrics": {
+                "test": {
+                        "path": "Sysdb/cli/(status)/startupConfigLastWriteTime"
+                }
+        }
+}
+```
+
+This is a bad example, however gives a simple overview of how the translation of the OpenConfig to OpenTSDB metrics works.
+
+ - metricPrefix is the starting name of the metrics
+ - Anything in parentheses "()" are added to the metric patch
+ - Anything in chevrons "<>" are tags
+
+So in the above example, the metric will be eos.status
+ 
+ 
+ # To Do
+ 
+  - Get a better sample.json file to show interface status
+
+
+
+
+
 
 
 
