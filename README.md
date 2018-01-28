@@ -25,11 +25,12 @@ bcec9674d430        jpdurot/opentsdb:latest                "/run.sh"            
                                                             sharp_golick
 ```
 
-Now load up a bash shell within the container so we can make some metrics. eos.status is used in the sample.json file. 
+Now load up a bash shell within the container so we can make some metrics. eos.counters.rates(bitsrate|pktsrate) is used in the sample.json file. 
 
 ```
 docker exec -t -i sharp_golick /bin/bash
-/usr/share/opentsdb/bin/tsdb mkmetric eos.status
+/usr/share/opentsdb/bin/tsdb mkmetric eos.counters.rates.bitsrate
+/usr/share/opentsdb/bin/tsdb mkmetric eos.counters.rates.pktsrate
 ```
 
 Finally, resolve the IP address of the OpenTSDB container:
@@ -66,26 +67,23 @@ Now run the octsdb binary filling in the Arista switch ip and OpenTSDB container
 {
         "comment": "This is a sample configuration",
         "subscriptions": [
-                "/Sysdb/cli/status"
+                "/Smash/counters/ethIntf/PhyEthtool-1/current/"
         ],
         "metricPrefix": "eos",
         "metrics": {
                 "test": {
-                        "path": "Sysdb/cli/(status)/startupConfigLastWriteTime"
+                        "path": "/Smash/(counters)/ethIntf/PhyEthtool-1/current/counter/(?P<intf>.+)/(rates)/(?P<direction>(?:in|out))(BitsRate|PktsRate)"
                 }
         }
 }
 ```
 
-This is a bad example, however gives a simple overview of how the translation of the OpenConfig to OpenTSDB metrics works.
+This gives a simple overview of how the translation of the OpenConfig to OpenTSDB metrics works.
 
  - metricPrefix is the starting name of the metrics
  - Anything in parentheses "()" are added to the metric patch
  - Anything in chevrons "<>" are tags
 
-So in the above example, the metric will be eos.status
- 
- 
- # To Do
- 
-  - Get a better sample.json file to show interface status
+So in the above example:
+ - the metrics will be eos.counters.rates.bitsrate & eos.counters.rates.bitsrate.
+ - the tages will be the interface name (<intf>) and the direction (<direction>(?:in|out))
