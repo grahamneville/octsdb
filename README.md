@@ -10,6 +10,12 @@ On this repo there are two compiled versions of Arista's octsdb client: https://
 
 This client subscribes to TerminAttr - gRPC OpenConfig - and writes the metrics to OpenTSDB
 
+Tested against:
+ - Arista vEOS 4.20.1F
+ - OpenTSDB version 2.3.0-RC1
+
+
+
 # Example usage:
 
 This explains how to get a POC up and running using OpenTSDB in a docker container
