@@ -100,6 +100,13 @@ daemon octsdb
    no shutdown
 ```
 
+Don't forget to daemonise Terminattr as well
+
+```
+daemon terminattr
+   exec /usr/bin/TerminAttr -grpcaddr 0.0.0.0:6042 -allowed_ips 0.0.0.0/0 -disableaaa
+   no shutdown
+```
 
 
 # sample.json file usage
