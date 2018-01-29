@@ -89,6 +89,19 @@ You should then see graph points coming through, if you click "now" or "autorelo
 
 
 
+# daemonising
+
+It's possible to have this client start automatically on the switch and persist reboots by adding the following config on the switch.
+You can change the binary and json files as you please.
+
+```
+daemon octsdb
+   exec /home/admin/octsdb-arista -addrs <arista_switch_ip>:6042 -config /home/admin/sample.json -v 4 -tsdb <opentsdb_container_ip>:4242
+   no shutdown
+```
+
+
+
 # sample.json file usage
 
 ```
