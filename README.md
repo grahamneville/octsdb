@@ -65,11 +65,11 @@ Finally, on the docker host clone this repo
 git clone https://github.com/grahamneville/octsdb.git
 ```
 
-If you wish to run octsdb-arista directly on the swtich you will have to manually scp the files over to the switch.
+If you wish to run octsdb-arista directly on the swtich you will have to manually scp the files over to the switch. For my vEOS image it was best to store the files within /persist/local/ so the files remain after boot.
 
 ```
-scp gneville@192.168.1.1:/home/gneville/octsdb-arista octsdb-arista
-scp gneville@192.168.1.1:/home/gneville/sample.json sample.json
+scp gneville@192.168.1.1:/home/gneville/octsdb-arista /persist/local/octsdb-arista
+scp gneville@192.168.1.1:/home/gneville/sample.json /persist/local/sample.json
 ```
 
 
@@ -82,6 +82,7 @@ If running octsdb on the docker host use the below command filling in the Arista
 If running octsdb-arista on the Arista switch use the below command:
 
 ```
+cd /persist/local/
 ./octsdb-arista -addrs localhost:6042 -config sample.json -v 4 -tsdb <opentsdb_container_ip>:4242
 ```
 
@@ -102,7 +103,7 @@ You can change the binary and json files as you please.
 
 ```
 daemon octsdb
-   exec /home/admin/octsdb-arista -addrs <arista_switch_ip>:6042 -config /home/admin/sample.json -v 4 -tsdb <opentsdb_container_ip>:4242
+   exec /persist/local/octsdb-arista -addrs <arista_switch_ip>:6042 -config /persist/local/sample.json -v 4 -tsdb <opentsdb_container_ip>:4242
    no shutdown
 ```
 
