@@ -1,13 +1,18 @@
 # octsdb
 
+On this repo there are two compiled versions of Arista's octsdb client: https://github.com/aristanetworks/goarista/tree/master/cmd/octsdb
 
-This is a (64-bit) compiled version of Arista's octsdb: https://github.com/aristanetworks/goarista/tree/master/cmd/octsdb
+"octsdb" works on a linux 64 build, where as "octsdb-arista" can be run directly on the Arista switch.
 
-This subscribes to TerminAttr - gRPC OpenConfig - and writes the metrics to OpenTSDB
+`ebad7ff5a12bdb93b638efaeb282db4b  octsdb`
+
+`081f38956dcaad0355b126fdf97e01d1  octsdb-arista`
+
+This client subscribes to TerminAttr - gRPC OpenConfig - and writes the metrics to OpenTSDB
 
 # Example usage:
 
-This explains how to get a POC up and running using docker
+This explains how to get a POC up and running using OpenTSDB in a docker container
 
 Download and run OpenTSDB docker image:
 
@@ -48,17 +53,32 @@ sudo su
 /usr/bin/TerminAttr -grpcaddr 0.0.0.0:6042 -allowed_ips 0.0.0.0/0 -disableaaa
 ```
 
-Finally, on the host running with go installed obtain the octsdb binary and sample.json file
+Finally, on the docker host clone this repo
 
 ```
 git clone https://github.com/grahamneville/octsdb.git
 ```
 
-Now run the octsdb binary filling in the Arista switch ip and OpenTSDB container IP addresses:
+If you wish to run octsdb-arista directly on the swtich you will have to manually scp the files over to the switch.
+
+```
+scp gneville@192.168.1.1:/home/gneville/octsdb-arista octsdb-arista
+scp gneville@192.168.1.1:/home/gneville/sample.json sample.json
+```
+
+
+If running octsdb on the docker host use the below command filling in the Arista switch ip and OpenTSDB container IP addresses:
 
 ```
 ./octsdb -addrs <arista_switch_ip>:6042 -config sample.json -v 4 -tsdb <opentsdb_container_ip>:4242
 ```
+
+If running octsdb-arista on the Arista switch use the below command:
+
+```
+./octsdb-arista -addrs localhost:6042 -config sample.json -v 4 -tsdb <opentsdb_container_ip>:4242
+```
+
 
 Now browse to the OpenTSDB container IP in a web browser on port 4242. e.g. http://192.168.1.100:4242
 Then in the metric field type "eos.counters.rates.bitsrate", click on rate and set a tag of "direction" and "in".
